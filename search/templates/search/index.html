@@ -1,0 +1,19 @@
+{% if search_result %}
+    <p>以下可能是您想要找的题目：</p>
+    <ul>
+        {% for result in search_result %}
+            <li>
+                <p>{{ result.question_stem }}</p>
+                <img src="../upload/{{ result.answer }}" width="100%" alt="{{ result.ori_path }}">
+            </li>
+        {% endfor %}
+    </ul>
+{% elif previous_query %}
+    <p>没有找到您查找的题目</p>
+{% endif %}
+
+<form action="{% url 'search:index' %}" method="POST">
+    {% csrf_token %}
+    <textarea name="query" id="query" cols="100" rows="5" value>{{ previous_query }}</textarea>
+    <input type="submit" value="搜索">
+</form>
